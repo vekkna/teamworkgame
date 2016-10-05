@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
-public class PlayerMove : MonoBehaviour {
+public class PlayerMove : NetworkBehaviour {
 
     Rigidbody2D rb;
     public float speed;
-    internal Vector2 target;
+	[SyncVar] Vector2 target;
     Vector2 dir;
     public float threshold = 0.1f;
 
@@ -17,6 +18,11 @@ public class PlayerMove : MonoBehaviour {
     void Start() {
         target = rb.position;
     }
+
+	[Command]
+	public void CmdSetTarget(Vector2 pos) {
+		target = pos;
+	}
 
     void Update() {
 

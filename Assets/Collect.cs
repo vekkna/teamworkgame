@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class Collect : MonoBehaviour {
+public class Collect : NetworkBehaviour {
 
     [SerializeField]
     RectTransform inventory;
@@ -18,9 +19,10 @@ public class Collect : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-
+		if (!isServer) {
+			return;
+		}
         if (other.CompareTag("Gem")) {
-
             if (gems.Count >= capacity) {
                 return;
             }
@@ -28,7 +30,7 @@ public class Collect : MonoBehaviour {
             Destroy(other.gameObject);
         }
     }
-
+		
     void AddGemToInventory(Gem gem) {
 
     }

@@ -3,8 +3,7 @@ using System.Collections;
 
 public class Follow : MonoBehaviour {
 
-    [SerializeField]
-    Transform target;
+    public Transform target;
     Transform tr;
     float zOffSet;
 
