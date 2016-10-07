@@ -3,22 +3,39 @@ using System.Collections.Generic;
 
 public class Gem : MonoBehaviour {
 
-    internal enum Colour {
-        red, blue, green, yellow
-    }
-    internal Colour colour;
+
+
+    public Ingredient ingredient;
 
     [SerializeField]
     Color red, blue, green, yellow;
-    Dictionary<Colour, Color> coloursDict;
+    Dictionary<Ingredient, Color> coloursDict;
+
     SpriteRenderer spr;
 
     void Awake() {
         spr = GetComponent<SpriteRenderer>();
-        coloursDict = new Dictionary<Colour, Color>();
+        coloursDict = new Dictionary<Ingredient, Color>();
+        coloursDict.Add(Ingredient.red, red);
+        coloursDict.Add(Ingredient.blue, blue);
+        coloursDict.Add(Ingredient.green, green);
+        coloursDict.Add(Ingredient.yellow, yellow);
     }
 
-    internal void Init(Colour c) {
+    void Start() {
+        Init(ingredient);
+    }
+
+    internal void Init(Ingredient c) {
+        ingredient = c;
         spr.color = coloursDict[c];
     }
+
+    public Color GetColor() {
+        return coloursDict[ingredient];
+    }
+}
+
+public enum Ingredient {
+    red, blue, green, yellow
 }

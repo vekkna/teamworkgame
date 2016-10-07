@@ -1,35 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class Collect : MonoBehaviour {
 
     [SerializeField]
-    RectTransform inventory;
-    [SerializeField]
-    int capacity = 3;
-    Sprite gem0, gem1, gem2;
-    Sprite[] gemsSprites;
-
-    List<Gem> gems;
-
-    void Awake() {
-        gems = new List<Gem>();
-        gemsSprites = new Sprite[] { gem0, gem1, gem2 };
-    }
+    Inventory inventory;
 
     void OnTriggerEnter2D(Collider2D other) {
 
         if (other.CompareTag("Gem")) {
-
-            if (gems.Count >= capacity) {
-                return;
-            }
-            AddGemToInventory(other.GetComponent<Gem>());
+            var gem = other.gameObject.GetComponent<Gem>();
+            inventory.AddGem(gem);
             Destroy(other.gameObject);
+        }
+
+        else if (other.CompareTag("Lock")) {
+
+            Lock l = other.gameObject.GetComponent<Lock>();
+            l.players.Add(this);
+            l.TryToUnlock(inventory.key);
         }
     }
 
-    void AddGemToInventory(Gem gem) {
-
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Lock")) {
+            Lock l = other.gameObject.GetComponent<Lock>();
+            if (l.players.Contains(this)) {
+                l.players.Remove(this);
+            }
+        }
     }
 }

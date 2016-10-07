@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Follow : MonoBehaviour {
 
@@ -7,14 +6,16 @@ public class Follow : MonoBehaviour {
     Transform target;
     Transform tr;
     float zOffSet;
+    internal bool isFollowing;
 
     void Awake() {
         tr = GetComponent<Transform>();
+        isFollowing = true;
     }
 
     void FixedUpdate() {
-
-        tr.position = new Vector3(target.position.x, target.position.y, tr.position.z);
-
+        if (isFollowing) {
+            tr.position = new Vector3(target.position.x, target.position.y, tr.position.z);
+        }
     }
 }

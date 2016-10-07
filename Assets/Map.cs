@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Map : MonoBehaviour {
 
     public float zoomedIn, zoomedOut;
+    [SerializeField]
+    Follow follow;
     bool isZoomedIn;
 
-    // Use this for initialization
     void Start() {
         zoomedIn = Camera.main.orthographicSize;
         isZoomedIn = true;
@@ -18,9 +18,9 @@ public class Map : MonoBehaviour {
         }
     }
 
-
-    public void Zoom() {
+    void Zoom() {
         Camera.main.orthographicSize = isZoomedIn ? zoomedOut : zoomedIn;
         isZoomedIn = !isZoomedIn;
+        follow.isFollowing = !follow.isFollowing;
     }
 }
